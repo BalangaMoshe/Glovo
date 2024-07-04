@@ -27,8 +27,8 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<Order> addOrder() {
-        Order order = orderService.addOrder();
+    public ResponseEntity<Order> addOrder(@RequestBody Order newOrder) {
+        Order order = orderService.addOrder(newOrder);
         return ResponseEntity.ok(order);
     }
 
@@ -65,4 +65,3 @@ public class OrderController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
-

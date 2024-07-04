@@ -17,15 +17,17 @@ public class OrderService {
         return Optional.ofNullable(orders.get(id));
     }
 
-    public Order addOrder() {
-        Order order = new Order();
-        orders.put(order.getId(), order);
-        return order;
+    public Order addOrder(Order newOrder) {
+        newOrder.setId(UUID.randomUUID());
+        orders.put(newOrder.getId(), newOrder);
+        return newOrder;
     }
 
     public Optional<Order> updateOrder(UUID id, Order updatedOrder) {
         if (orders.containsKey(id)) {
-            updatedOrder.setProducts(orders.get(id).getProducts());
+            Order existingOrder = orders.get(id);
+            updatedOrder.setId(existingOrder.getId());  // Забезпечив незмінність ID
+            updatedOrder.setProducts(existingOrder.getProducts());
             orders.put(id, updatedOrder);
             return Optional.of(updatedOrder);
         }
